@@ -4,9 +4,9 @@ const initialState = {
   name: "",
   sku: "",
   description: "",
-  quantity: 0,
-  costPrice: 0,
-  sellingPrice: 0,
+  quantity: "",
+  costPrice: "",
+  sellingPrice: "",
   lowStockThreshold: "",
 };
 
@@ -19,9 +19,9 @@ const ProductForm = ({ onSubmit, editingProduct, onCancel }) => {
         name: editingProduct.name || "",
         sku: editingProduct.sku || "",
         description: editingProduct.description || "",
-        quantity: editingProduct.quantity ?? 0,
-        costPrice: editingProduct.costPrice ?? 0,
-        sellingPrice: editingProduct.sellingPrice ?? 0,
+        quantity: editingProduct.quantity ?? "",
+        costPrice: editingProduct.costPrice ?? "",
+        sellingPrice: editingProduct.sellingPrice ?? "",
         lowStockThreshold:
           editingProduct.lowStockThreshold === null ||
           editingProduct.lowStockThreshold === undefined
@@ -40,56 +40,96 @@ const ProductForm = ({ onSubmit, editingProduct, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(form);
+
     if (!editingProduct) {
       setForm(initialState);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-5 rounded-xl shadow mb-6">
-      <h2 className="text-lg font-semibold mb-4">
-        {editingProduct ? "Edit Product" : "Add Product"}
+    <form onSubmit={handleSubmit} className="form-card">
+      <h2 className="form-title">
+        {editingProduct ? "Edit Product" : "Add New Product"}
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} required />
-        <input name="sku" placeholder="SKU" value={form.sku} onChange={handleChange} required />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          className="md:col-span-2"
-        />
-        <input name="quantity" type="number" placeholder="Quantity" value={form.quantity} onChange={handleChange} />
-        <input name="costPrice" type="number" placeholder="Cost Price" value={form.costPrice} onChange={handleChange} />
-        <input
-          name="sellingPrice"
-          type="number"
-          placeholder="Selling Price"
-          value={form.sellingPrice}
-          onChange={handleChange}
-        />
-        <input
-          name="lowStockThreshold"
-          type="number"
-          placeholder="Low Stock Threshold"
-          value={form.lowStockThreshold}
-          onChange={handleChange}
-        />
+      <div className="form-grid">
+        <div>
+          <input
+            name="name"
+            placeholder="Product Name"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <input
+            name="sku"
+            placeholder="SKU"
+            value={form.sku}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="full-width">
+          <textarea
+            name="description"
+            placeholder="Description (optional)"
+            value={form.description}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <input
+            name="quantity"
+            type="number"
+            placeholder="Quantity"
+            value={form.quantity}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <input
+            name="costPrice"
+            type="number"
+            placeholder="Cost Price"
+            value={form.costPrice}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <input
+            name="sellingPrice"
+            type="number"
+            placeholder="Selling Price"
+            value={form.sellingPrice}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <input
+            name="lowStockThreshold"
+            type="number"
+            placeholder="Low Stock Threshold"
+            value={form.lowStockThreshold}
+            onChange={handleChange}
+          />
+        </div>
       </div>
 
-      <div className="mt-4 flex gap-3">
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      <div className="action-group" style={{ marginTop: "18px" }}>
+        <button type="submit" className="btn btn-primary">
           {editingProduct ? "Update Product" : "Create Product"}
         </button>
 
         {editingProduct && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400"
-          >
+          <button type="button" onClick={onCancel} className="btn btn-secondary">
             Cancel
           </button>
         )}

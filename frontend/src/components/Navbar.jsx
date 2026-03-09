@@ -1,7 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -9,25 +10,42 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  return (
-    <nav className="bg-white shadow mb-6">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-600">StockFlow</h1>
+  const isActive = (path) => location.pathname === path;
 
-        <div className="flex gap-4 items-center">
-          <Link to="/dashboard" className="text-sm hover:text-blue-600">
+  return (
+    <nav className="navbar">
+      <div className="navbar-inner">
+        <div className="brand">
+          <span className="brand-title">StockFlow</span>
+          <span className="brand-subtitle">Inventory Management MVP</span>
+        </div>
+
+        <div className="nav-links">
+          <Link
+            to="/dashboard"
+            className="nav-link"
+            style={isActive("/dashboard") ? { background: "#eff6ff", color: "#2563eb" } : {}}
+          >
             Dashboard
           </Link>
-          <Link to="/products" className="text-sm hover:text-blue-600">
+
+          <Link
+            to="/products"
+            className="nav-link"
+            style={isActive("/products") ? { background: "#eff6ff", color: "#2563eb" } : {}}
+          >
             Products
           </Link>
-          <Link to="/settings" className="text-sm hover:text-blue-600">
+
+          <Link
+            to="/settings"
+            className="nav-link"
+            style={isActive("/settings") ? { background: "#eff6ff", color: "#2563eb" } : {}}
+          >
             Settings
           </Link>
-          <button
-            onClick={logout}
-            className="bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600"
-          >
+
+          <button onClick={logout} className="btn btn-danger btn-sm">
             Logout
           </button>
         </div>

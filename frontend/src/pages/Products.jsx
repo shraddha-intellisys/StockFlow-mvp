@@ -17,7 +17,8 @@ const Products = () => {
 
   const fetchProducts = async (searchValue = "") => {
     try {
-      const res = await API.get(`/products${searchValue ? `?search=${searchValue}` : ""}`);
+      const query = searchValue ? `?search=${encodeURIComponent(searchValue)}` : "";
+      const res = await API.get(`/products${query}`);
       setProducts(res.data);
     } catch (error) {
       console.error("Fetch products error:", error);
@@ -67,10 +68,14 @@ const Products = () => {
   };
 
   return (
-    <>
+    <div className="page-shell">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-6">Products</h1>
+
+      <div className="page-container">
+        <h1 className="page-title">Products</h1>
+        <p className="page-subtitle">
+          Add, update, and manage all inventory items for your organization.
+        </p>
 
         <ProductForm
           onSubmit={handleSubmit}
@@ -78,13 +83,12 @@ const Products = () => {
           onCancel={() => setEditingProduct(null)}
         />
 
-        <div className="mb-4">
+        <div className="search-box">
           <input
             type="text"
-            placeholder="Search by product name or SKU"
+            placeholder="Search by product name or SKU..."
             value={search}
             onChange={handleSearch}
-            className="bg-white"
           />
         </div>
 
@@ -95,7 +99,7 @@ const Products = () => {
           defaultThreshold={defaultThreshold}
         />
       </div>
-    </>
+    </div>
   );
 };
 

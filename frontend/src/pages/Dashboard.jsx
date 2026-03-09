@@ -7,6 +7,7 @@ const Dashboard = () => {
     totalProducts: 0,
     totalQuantity: 0,
     lowStockItems: [],
+    defaultThreshold: 5,
   });
 
   useEffect(() => {
@@ -23,55 +24,75 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div className="page-shell">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-white rounded-xl shadow p-5">
-            <p className="text-gray-500">Total Products</p>
-            <h2 className="text-3xl font-bold">{data.totalProducts}</h2>
+      <div className="page-container">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-subtitle">
+          Get a quick overview of your products, stock quantity, and low stock alerts.
+        </p>
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-label">Total Products</div>
+            <div className="stat-value">{data.totalProducts}</div>
           </div>
 
-          <div className="bg-white rounded-xl shadow p-5">
-            <p className="text-gray-500">Total Quantity</p>
-            <h2 className="text-3xl font-bold">{data.totalQuantity}</h2>
+          <div className="stat-card">
+            <div className="stat-label">Total Quantity</div>
+            <div className="stat-value">{data.totalQuantity}</div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-label">Low Stock Items</div>
+            <div className="stat-value">{data.lowStockItems.length}</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <h2 className="text-lg font-semibold mb-4">Low Stock Items</h2>
+        <div className="table-card">
+          <div className="table-header">
+            <div>
+              <h3 className="table-title">Low Stock Products</h3>
+              <div className="table-subtitle">
+                Products where quantity is less than or equal to threshold
+              </div>
+            </div>
+          </div>
 
-          {data.lowStockItems.length > 0 ? (
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100">
+          <div className="table-responsive">
+            <table className="data-table">
+              <thead>
                 <tr>
-                  <th className="text-left px-3 py-2">Name</th>
-                  <th className="text-left px-3 py-2">SKU</th>
-                  <th className="text-left px-3 py-2">Quantity</th>
-                  <th className="text-left px-3 py-2">Threshold</th>
+                  <th>Name</th>
+                  <th>SKU</th>
+                  <th>Quantity</th>
+                  <th>Threshold</th>
                 </tr>
               </thead>
               <tbody>
-                {data.lowStockItems.map((item) => (
-                  <tr key={item._id} className="border-t">
-                    <td className="px-3 py-2">{item.name}</td>
-                    <td className="px-3 py-2">{item.sku}</td>
-                    <td className="px-3 py-2">{item.quantity}</td>
-                    <td className="px-3 py-2">
-                      {item.lowStockThreshold ?? data.defaultThreshold}
+                {data.lowStockItems.length > 0 ? (
+                  data.lowStockItems.map((item) => (
+                    <tr key={item._id}>
+                      <td>{item.name}</td>
+                      <td>{item.sku}</td>
+                      <td>{item.quantity}</td>
+                      <td>{item.lowStockThreshold ?? data.defaultThreshold}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="empty-state">
+                      No low stock items right now.
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
-          ) : (
-            <p className="text-gray-500">No low stock items</p>
-          )}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

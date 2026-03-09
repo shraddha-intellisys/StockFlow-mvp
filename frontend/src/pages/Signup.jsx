@@ -40,36 +40,52 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <form onSubmit={handleSignup} className="bg-white w-full max-w-md p-6 rounded-xl shadow">
-        <h1 className="text-2xl font-bold mb-5 text-center">Create Account</h1>
+    <div className="auth-page">
+      <form onSubmit={handleSignup} className="auth-card">
+        <h1 className="auth-title">Create Account</h1>
+        <p className="auth-subtitle">Set up your organization and start managing inventory</p>
 
-        {error && <p className="text-red-600 mb-3">{error}</p>}
+        {error && <div className="alert alert-error">{error}</div>}
 
-        <div className="space-y-4">
-          <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
-          <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+        <div className="auth-form">
+          <input
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Create password"
+            onChange={handleChange}
+            required
+          />
           <input
             name="confirmPassword"
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm password"
             onChange={handleChange}
             required
           />
           <input
             name="organizationName"
-            placeholder="Organization Name"
+            placeholder="Organization name"
             onChange={handleChange}
             required
           />
         </div>
 
-        <button className="w-full mt-5 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        <button className="btn btn-primary w-full" style={{ marginTop: "18px" }}>
           Signup
         </button>
 
-        <p className="text-sm mt-4 text-center">
-          Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
+        <p className="auth-footer">
+          Already have an account?{" "}
+          <Link to="/login" className="auth-link">
+            Login
+          </Link>
         </p>
       </form>
     </div>

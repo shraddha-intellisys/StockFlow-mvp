@@ -55,12 +55,14 @@ const getProducts = async (req, res) => {
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: "i" } },
-        { sku: { $regex: search, $options: "i" } },
+        { sku: { $regex: search, $options: "i" } }
       ];
     }
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
+
     res.json(products);
+
   } catch (error) {
     console.error("Get products error:", error);
     res.status(500).json({ message: "Server error while fetching products" });

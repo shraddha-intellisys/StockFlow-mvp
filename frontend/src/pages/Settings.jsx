@@ -33,27 +33,46 @@ const Settings = () => {
   };
 
   return (
-    <>
+    <div className="page-shell">
       <Navbar />
-      <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
-        <form onSubmit={saveSettings} className="bg-white p-6 rounded-xl shadow">
-          <label className="block mb-2 font-medium">Default Low Stock Threshold</label>
+      <div className="page-container settings-wrap">
+        <h1 className="page-title">Settings</h1>
+        <p className="page-subtitle">
+          Configure organization-level inventory rules and default thresholds.
+        </p>
+
+        <form onSubmit={saveSettings} className="form-card">
+          <h2 className="form-title">Inventory Settings</h2>
+
+          {message && (
+            <div
+              className={message.toLowerCase().includes("success") ? "alert alert-success" : "alert alert-error"}
+            >
+              {message}
+            </div>
+          )}
+
+          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
+            Default Low Stock Threshold
+          </label>
+
           <input
             type="number"
             value={defaultLowStockThreshold}
             onChange={(e) => setDefaultLowStockThreshold(Number(e.target.value))}
           />
 
-          <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-            Save
-          </button>
+          <p className="helper-text">
+            This value is used when a product-specific low stock threshold is not defined.
+          </p>
 
-          {message && <p className="mt-3 text-sm text-green-600">{message}</p>}
+          <button className="btn btn-primary" style={{ marginTop: "18px" }}>
+            Save Settings
+          </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
