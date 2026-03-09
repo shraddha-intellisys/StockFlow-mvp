@@ -50,19 +50,19 @@ const getProducts = async (req, res) => {
   try {
     const { search } = req.query;
 
-    const filter = { organizationId: req.user.organizationId };
+    const filter = {
+      organizationId: req.user.organizationId,
+    };
 
-    if (search) {
+    if (search && search.trim() !== "") {
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { sku: { $regex: search, $options: "i" } }
+        { name: { $regex: search.trim(), $options: "i" } },
+        { sku: { $regex: search.trim(), $options: "i" } },
       ];
     }
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
-
     res.json(products);
-
   } catch (error) {
     console.error("Get products error:", error);
     res.status(500).json({ message: "Server error while fetching products" });

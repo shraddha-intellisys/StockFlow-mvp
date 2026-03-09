@@ -17,7 +17,10 @@ const Products = () => {
 
   const fetchProducts = async (searchValue = "") => {
     try {
-      const query = searchValue ? `?search=${encodeURIComponent(searchValue)}` : "";
+      const query = searchValue.trim()
+        ? `?search=${encodeURIComponent(searchValue.trim())}`
+        : "";
+
       const res = await API.get(`/products${query}`);
       setProducts(res.data);
     } catch (error) {
