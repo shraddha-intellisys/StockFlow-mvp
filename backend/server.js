@@ -10,18 +10,16 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://stock-flow-mvp-p2q5.vercel.app",
+  "https://stock-flow-mvp-p2q5.vercel.app"
 ];
+
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+    allowedHeaders: ["Content-Type","Authorization"]
   })
 );
 
