@@ -10,7 +10,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.CLIENT_URL,
+  "https://stock-flow-mvp-p2q5.vercel.app",
 ];
 
 app.use(
