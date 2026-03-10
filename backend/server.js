@@ -10,7 +10,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://stock-flow-mvp-p2q5.vercel.app",
+    ],
     credentials: true,
   })
 );
